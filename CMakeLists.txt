@@ -768,15 +768,18 @@ ENDIF()
 # This is always available
 SET(BACKENDS  "${BACKENDS} Null")
 
+FIND_PACKAGE(PkgConfig REQUIRED)
+
 IF(ALSOFT_UTILS)
     add_subdirectory(utils/alsoft-config)
 ENDIF()
 IF(ALSOFT_EXAMPLES)
-    FIND_PACKAGE(SDL)
+    pkg_check_modules(SDL sdl2)
     IF(SDL_FOUND)
+        INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIRS})
         FIND_PACKAGE(SDL_sound)
         IF(SDL_SOUND_FOUND AND CMAKE_VERSION VERSION_LESS "2.8.8")
-            INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIR} ${SDL_SOUND_INCLUDE_DIR})
+            INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIRS} ${SDL_SOUND_INCLUDE_DIR})
         ENDIF()
     ENDIF()
 ENDIF()
@@ -900,7 +903,7 @@ IF(ALSOFT_EXAMPLES)
 
         ADD_EXECUTABLE(alloopback examples/alloopback.c)
         TARGET_LINK_LIBRARIES(alloopback ex-common ${SDL_SOUND_LIBRARIES} ${SDL_LIBRARIES} ${LIBNAME})
-        SET_PROPERTY(TARGET alloopback APPEND PROPERTY INCLUDE_DIRECTORIES ${SDL_INCLUDE_DIR}
+        SET_PROPERTY(TARGET alloopback APPEND PROPERTY INCLUDE_DIRECTORIES ${SDL_INCLUDE_DIRS}
                                                                            ${SDL_SOUND_INCLUDE_DIR})
 
         INSTALL(TARGETS alstream alreverb allatency alloopback

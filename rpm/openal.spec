@@ -1,13 +1,15 @@
 Summary: OpenAL Soft
 Name: OpenAL
 Version: 1.15.1
-Release: 2
+Release: 3
 Source: %{name}-%{version}.tar.bz2
 URL: http://kcat.strangesoft.net/openal.html
 License: LGPL
 Group: Development/Libraries
 BuildRequires: cmake
 BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: SDL2_sound-devel
 
 
 %description
@@ -24,6 +26,19 @@ Group: Development/Libraries
 Requires: %{name} = %{version}
 
 %description devel
+OpenAL provides capabilities for playing audio in a virtual 3D environment.
+Distance attenuation, doppler shift, and directional sound emitters are among
+the features handled by the API. More advanced effects, including air
+absorption, occlusion, and environmental reverb, are available through the EFX
+extension. It also facilitates streaming audio, multi-channel buffers, and
+audio capture.
+
+%package tests
+Summary: OpenAL Soft - Test applications
+Group: Development/Libraries
+Requires: %{name} = %{version}
+
+%description tests
 OpenAL provides capabilities for playing audio in a virtual 3D environment.
 Distance attenuation, doppler shift, and directional sound emitters are among
 the features handled by the API. More advanced effects, including air
@@ -57,8 +72,13 @@ make
 %files devel
 %defattr(-,root,root,-)
 %doc README COPYING env-vars.txt hrtf.txt
-%{_bindir}/*
+%{_bindir}/openal-info
+%{_bindir}/makehrtf
 %{_libdir}/lib*.so
 %{_includedir}/*/*.h
 %{_libdir}/pkgconfig/*
 
+%files tests
+%defattr(-,root,root,-)
+%doc README COPYING env-vars.txt hrtf.txt
+%{_bindir}/al*
