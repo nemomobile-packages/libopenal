@@ -1,8 +1,8 @@
 Summary: OpenAL Soft
 Name: OpenAL
 Version: 1.15.1
-Release: 1
-Source: http://kcat.strangesoft.net/openal-releases/openal-soft-%{version}.tar.bz2
+Release: 2
+Source: %{name}-%{version}.tar.bz2
 URL: http://kcat.strangesoft.net/openal.html
 License: LGPL
 Group: Development/Libraries
